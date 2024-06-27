@@ -1,11 +1,13 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import { NameSpace } from '../const';
-import { data } from './data/data';
-import { loading } from './loading/loading';
-import { userProcess } from './user-process/user-process';
+import { AppReducer as AppSlice } from './app-reducer/reducer';
+import { OfferSlice } from './offer-reducers/offer/reducer';
+import { OfferByIDSlice } from './offer-reducers/offer-by-id/reducer';
+import { UserSlice } from './user-reducer/reducer';
+import { SliceNames } from '../constant/consts';
 
 export const rootReducer = combineReducers({
-  [NameSpace.Data]: data.reducer,
-  [NameSpace.Loading]: loading.reducer,
-  [NameSpace.User]: userProcess.reducer,
+  [SliceNames.AppReducer]: AppSlice.reducer,
+  [SliceNames.OfferReducer]: OfferSlice.reducer,
+  [SliceNames.OfferByIdReducer]: OfferByIDSlice.reducer,
+  [SliceNames.UserReducer]: UserSlice.reducer,
 });

@@ -1,7 +1,8 @@
-import axios, {AxiosError, AxiosInstance, AxiosResponse} from 'axios';
-import {getToken} from './token';
+import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
+import { SERVER_BASE_URL, SERVER_API_CALL_TIMEOUT } from '../constant/consts';
 import { StatusCodes } from 'http-status-codes';
-import { processErrorHandle } from './process-error-handle';
+import { processErrorHandle } from './handle-api-error';
+import { getToken } from './token';
 
 type DetailMessageType = {
   type: string;
@@ -16,13 +17,10 @@ const StatusCodeMapping: Record<number, boolean> = {
 
 const shouldDisplayError = (response: AxiosResponse) => !!StatusCodeMapping[response.status];
 
-const BACKEND_URL = 'https://14.design.htmlacademy.pro/six-cities';
-const REQUEST_TIMEOUT = 5000;
-
 export const createAPI = (): AxiosInstance => {
   const api = axios.create({
-    baseURL: BACKEND_URL,
-    timeout: REQUEST_TIMEOUT,
+    baseURL: SERVER_BASE_URL,
+    timeout: SERVER_API_CALL_TIMEOUT,
   });
 
   api.interceptors.request.use(
@@ -43,7 +41,7 @@ export const createAPI = (): AxiosInstance => {
       if (error.response && shouldDisplayError(error.response)) {
         const detailMessage = (error.response.data);
 
-        processErrorHandle(detailMessage.message);
+        processErrorHandle(detailMessage.message, error.response.status);
       }
 
       throw error;

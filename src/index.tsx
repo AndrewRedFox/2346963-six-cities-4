@@ -1,14 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './components/app/app';
 import { Provider } from 'react-redux';
+import App from './app';
 import { store } from './store';
-import { checkAuthAction, fetchFavoriteOffers, fetchOffersAction } from './services/api-actions';
+import { checkAuthAction, fetchOffersAction } from './store/api-actions';
 import ErrorMessage from './components/error-message/error-message';
 
 store.dispatch(fetchOffersAction());
 store.dispatch(checkAuthAction());
-store.dispatch(fetchFavoriteOffers());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
